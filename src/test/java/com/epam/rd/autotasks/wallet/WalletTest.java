@@ -113,6 +113,13 @@ public class WalletTest {
 
         checkWallet(startBalance, totalPaid.get(), counts, counts);
     }
+    /*
+    private void checkWallet(long startBalance, long totalPaid, int transactionsCount, int uniqueRecipients) {
+        checkResultingBalanceAndCummulativePrice(startBalance, totalPaid);
+        checkOverdraftAbsence();
+        checkLog(transactionsCount, uniqueRecipients, totalPaid);
+    }
+     */
 
     @ParameterizedTest(name = "Parallelism = {0}")
     @ValueSource(ints = {1, 2, 3, 4, 8, 16, 32})

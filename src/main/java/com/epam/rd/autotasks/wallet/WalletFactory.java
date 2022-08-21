@@ -23,6 +23,9 @@ public final class WalletFactory {
      * @return new {@linkplain Wallet} instance
      */
     public static Wallet wallet(List<Account> accounts, PaymentLog log) {
-        throw new UnsupportedOperationException();
+
+        if(accounts.isEmpty()) throw new UnsupportedOperationException();
+
+        return new WalletImpl(accounts, log);
     }
 }

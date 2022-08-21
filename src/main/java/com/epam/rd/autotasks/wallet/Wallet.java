@@ -35,4 +35,5 @@ public interface Wallet {
      * @throws ShortageOfMoneyException when no account with enough money is found
      */
     public void pay(String recipient, long amount) throws Exception;
+
 }

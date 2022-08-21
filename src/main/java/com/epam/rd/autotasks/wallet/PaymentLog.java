@@ -15,4 +15,6 @@ public interface PaymentLog {
      * @param amount of money which was paid
      */
     void add(Account account, String recipient, long amount);
+
+
 }
