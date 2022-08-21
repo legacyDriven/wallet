@@ -7,19 +7,24 @@ import java.util.concurrent.locks.ReentrantLock;
 public class WalletImpl implements Wallet {
 
     private final List<Account> accountList;
-    final PaymentLogImpl logs;
+    final PaymentLog logs;
     private final Lock paymentLock;
 
     public WalletImpl(List<Account> accountList, PaymentLog paymentLog) {
         this.accountList = accountList;
-        this.logs = new PaymentLogImpl();
+        this.logs = paymentLog;
         paymentLock = new ReentrantLock();
     }
 
 //    @Override
 //    public void pay(String recipient, long amount) throws Exception {
 //        Account provider = this.getProvider(recipient, amount);
-//
+//        provider.pay(amount);
+//        logs.add(provider, recipient, amount);
+//        try{
+//            provider.lock().lock();
+//            provider.pay(amount);
+//        }
 //    }
     @Override
     public void pay(String recipient, long amount) throws ShortageOfMoneyException {
@@ -51,10 +56,10 @@ public class WalletImpl implements Wallet {
 
         System.out.println();
         System.out.println(wallet);
-        System.out.println(wallet.logs.getLogs().size());
-        wallet.pay("marek", 55);
-        System.out.println(wallet.logs.getLogs().size());
-        System.out.println(wallet.logs.getLogs());
+//        System.out.println(wallet.logs.getLogs().size());
+//        wallet.pay("marek", 55);
+//        System.out.println(wallet.logs.getLogs().size());
+//        System.out.println(wallet.logs.getLogs());
     }
 
     @Override
