@@ -16,16 +16,6 @@ public class WalletImpl implements Wallet {
         paymentLock = new ReentrantLock();
     }
 
-//    @Override
-//    public void pay(String recipient, long amount) throws Exception {
-//        Account provider = this.getProvider(recipient, amount);
-//        provider.pay(amount);
-//        logs.add(provider, recipient, amount);
-//        try{
-//            provider.lock().lock();
-//            provider.pay(amount);
-//        }
-//    }
     @Override
     public void pay(String recipient, long amount) throws ShortageOfMoneyException {
         try {
@@ -36,40 +26,8 @@ public class WalletImpl implements Wallet {
                     .orElseThrow(() -> new ShortageOfMoneyException(recipient, amount));
             provider.pay(amount);
             logs.add(provider, recipient, amount);
-            provider.lock();
         } finally {
             paymentLock.unlock();
         }
     }
-
-
-    public Account getProvider(String recipient, long amount) throws ShortageOfMoneyException {
-        return accountList.stream().filter(n-> n.balance()>=amount).findFirst().orElseThrow(()->new ShortageOfMoneyException(recipient, amount));
-    }
-
-
-    public static void main(String[] args) throws Exception {
-        List<Account> accounts = List.of(new AccountImpl("gienek", 500), new AccountImpl("franek" , 400 ));
-
-       // WalletImpl wallet = WalletFactory.wallet(accounts, new PaymentLogImpl());
-        WalletImpl wallet = new WalletImpl(accounts, new PaymentLogImpl());
-
-        System.out.println();
-        System.out.println(wallet);
-//        System.out.println(wallet.logs.getLogs().size());
-//        wallet.pay("marek", 55);
-//        System.out.println(wallet.logs.getLogs().size());
-//        System.out.println(wallet.logs.getLogs());
-    }
-
-    @Override
-    public String toString() {
-        return "WalletImpl{" +
-                "accountList=" + accountList +
-                ", paymentLog=" + logs +
-                ", paymentLock=" + paymentLock +
-                '}';
-    }
-
-
 }
